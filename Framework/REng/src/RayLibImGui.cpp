@@ -1,3 +1,4 @@
+#include "pch.h"
 /**********************************************************************************************
 *
 *   raylibExtras * Utilities and Shared Components for Raylib

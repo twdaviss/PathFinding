@@ -1,4 +1,3 @@
-#include <iostream>
 #include <REngine.h>
 #include "Tilemap.h"
 REng::Math::Vector2 position;

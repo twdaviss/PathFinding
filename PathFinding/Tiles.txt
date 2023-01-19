@@ -1,11 +1,4 @@
-grass_bottom_left.png
-grass_bottom_middle.png
-grass_bottom_right.png
-grass_left.png
-grass_middle.png
-grass_right.png
-grass_top_left.png
-grass_top_middle.png
-grass_top_right.png
-wall.png
-water.png
+Tiles: 3
+grass_middle.png 0
+water.png 1
+wall.png 6

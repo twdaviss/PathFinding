@@ -1,6 +1,6 @@
 #pragma once
-#include <vector>
 #include <REngine.h>
+#include <AI.h>
 class Tilemap
 {
 public:
@@ -9,9 +9,14 @@ public:
 	void LoadTiles(const char* tilesPath);
 
 	void Render();
+	struct Tile {
+		Texture2D texture;
+		int weight;
+	};
 private:
 	std::vector<int> mTilemap;
-	std::vector<Texture2D> mTilemapTextures;
+	std::vector<Tile*> mTiles;
+	AI::GridBasedGraph mGridBasedGraph;
 	int mRows;
 	int mCollumns;
 	int mTileSize;
