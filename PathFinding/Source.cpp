@@ -68,7 +68,7 @@ bool GameUpdate() {
 }
 
 void GameCleanup() {
-
+	myTilemap.Unload();
 }
 
 int main() {

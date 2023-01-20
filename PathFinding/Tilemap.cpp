@@ -45,6 +45,7 @@ void Tilemap::LoadTiles(const char* tilesPath)
 		tile->texture = texture;
 		tile->weight = weight;
 		mTiles.push_back(tile);
+
 	}
 }
 
@@ -59,8 +60,7 @@ void Tilemap::Render()
 			currentTile++;
 		}
 	}
-
-
-
-
+}
+void Tilemap::Unload() {
+	mGridBasedGraph.~GridBasedGraph();
 }

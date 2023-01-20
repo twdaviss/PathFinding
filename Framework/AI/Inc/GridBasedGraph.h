@@ -16,7 +16,7 @@ namespace AI
 			NorthWest
 		};
 		struct Node {
-			std::array<Node*, 8> neighbours = {};
+			std::array<Node*, 8> neighbours = {0};
 			int collumn = 0;
 			int row = 0;
 		};
@@ -28,13 +28,14 @@ namespace AI
 		int GetCollumns() const;
 		int GetRows() const;
 
-
+		void SetNeighbours();
+		~GridBasedGraph();
 	private:
 		int GetIndex(int x, int y)const;
 
 		std::vector<Node*> mNodes;
 		int mCollumns = 0;
-		int mRows = 9;
+		int mRows = 0;
 
 
 	};

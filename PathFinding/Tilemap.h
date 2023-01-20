@@ -9,6 +9,7 @@ public:
 	void LoadTiles(const char* tilesPath);
 
 	void Render();
+	void Unload();
 	struct Tile {
 		Texture2D texture;
 		int weight;
