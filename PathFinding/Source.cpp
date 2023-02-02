@@ -28,7 +28,7 @@ void GameInit() {
 
 bool GameUpdate() {
 
-	myTilemap.Render();
+	myTilemap.Render(true);
 
 	float moveSpeed = 200.0f;
 	if (IsKeyDown(KEY_RIGHT)) {
@@ -58,7 +58,6 @@ bool GameUpdate() {
 	}
 	if (IsKeyDown(KEY_UP)) {
 		position.y -= moveSpeed * GetFrameTime();
-
 	}
 
 	DrawTextureRec(myTexture, rect, { position.x, position.y }, WHITE);

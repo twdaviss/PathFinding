@@ -49,14 +49,33 @@ void Tilemap::LoadTiles(const char* tilesPath)
 	}
 }
 
-void Tilemap::Render()
+void Tilemap::Render(bool debug)
 {
+	using AI::GridBasedGraph;
 	Texture2D texture;
 	int currentTile = 0;
+	GridBasedGraph::Node* currentNode;
 	for (int rows = 0; rows < mRows; rows++) {
 		for (int collumns = 0; collumns < mCollumns; collumns++) {
 			texture = mTiles[mTilemap[currentTile]]->texture;
 			DrawTexture(texture,collumns*mTileSize,rows*mTileSize,WHITE);
+
+			if (debug) {
+				if (Tilemap::GetTile(collumns,rows)->weight >= 6) {
+					break;
+				}
+				currentNode = mGridBasedGraph.GetNode(collumns, rows);
+					
+				DrawLine(collumns, rows, currentNode->neighbours[GridBasedGraph::Directions::North]->collumn, currentNode->neighbours[GridBasedGraph::Directions::North]->row,BLACK);
+				DrawLine(collumns, rows, currentNode->neighbours[GridBasedGraph::Directions::NorthEast]->collumn, currentNode->neighbours[GridBasedGraph::Directions::NorthEast]->row, BLACK);
+				DrawLine(collumns, rows, currentNode->neighbours[GridBasedGraph::Directions::East]->collumn, currentNode->neighbours[GridBasedGraph::Directions::East]->row, BLACK);
+				DrawLine(collumns, rows, currentNode->neighbours[GridBasedGraph::Directions::SouthEast]->collumn, currentNode->neighbours[GridBasedGraph::Directions::SouthEast]->row, BLACK);
+				DrawLine(collumns, rows, currentNode->neighbours[GridBasedGraph::Directions::South]->collumn, currentNode->neighbours[GridBasedGraph::Directions::South]->row, BLACK);
+				DrawLine(collumns, rows, currentNode->neighbours[GridBasedGraph::Directions::SouthWest]->collumn, currentNode->neighbours[GridBasedGraph::Directions::SouthWest]->row, BLACK);
+				DrawLine(collumns, rows, currentNode->neighbours[GridBasedGraph::Directions::West]->collumn, currentNode->neighbours[GridBasedGraph::Directions::West]->row, BLACK);
+				DrawLine(collumns, rows, currentNode->neighbours[GridBasedGraph::Directions::NorthWest]->collumn, currentNode->neighbours[GridBasedGraph::Directions::NorthWest]->row, BLACK);
+			}
+
 			currentTile++;
 		}
 	}

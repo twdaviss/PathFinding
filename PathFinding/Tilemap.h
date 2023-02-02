@@ -8,12 +8,16 @@ public:
 
 	void LoadTiles(const char* tilesPath);
 
-	void Render();
+	void Render(bool debug);
 	void Unload();
 	struct Tile {
 		Texture2D texture;
 		int weight;
 	};
+	Tile* GetTile(int collumn, int row) {
+		int index = collumn + row * mCollumns;
+		return mTiles[index];
+	}
 private:
 	std::vector<int> mTilemap;
 	std::vector<Tile*> mTiles;
