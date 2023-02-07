@@ -29,7 +29,11 @@ void GameInit() {
 bool GameUpdate() {
 	std::vector<REng::Math::Vector2> path;
 	myTilemap.Render(true);
-	path = myTilemap.FindPathDijkstra(1,1,9,9);
+	//path = myTilemap.FindPath(1,1,9,9);
+	//path = myTilemap.FindPathDijkstra(1, 1, 9, 9);
+	path = myTilemap.FindPathAStar(1, 1, 9, 9);
+
+
 	float moveSpeed = 200.0f;
 	if (IsKeyDown(KEY_RIGHT)) {
 		position.x += moveSpeed * GetFrameTime();

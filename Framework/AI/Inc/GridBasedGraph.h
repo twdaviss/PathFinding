@@ -24,11 +24,13 @@ namespace AI
 			bool opened = false;
 			bool closed = false;
 
+			//Dijkstra and A*
 			float cost = 0.0f;
+			float guess = 0.0f;
 
 			bool operator<(const Node& a) const
 			{
-				return (cost < a.cost); // (a.cost < cost)
+				return ((cost + guess) < (a.cost + a.guess)); // (a.cost < cost)
 			}
 		};
 		void ResetSearchParameters() const;

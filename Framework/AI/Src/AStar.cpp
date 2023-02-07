@@ -1,7 +1,7 @@
 #include "pch.h"
-#include "Dijkstra.h"
+#include "AStar.h"
 using namespace AI;
-bool AI::Dijkstra::Run(GridBasedGraph& graph, int startX, int startY, int endX, int endY, GetCost getCost)
+bool AI::AStar::Run(GridBasedGraph& graph, int startX, int startY, int endX, int endY, GetCost getCost, GetGuess getGuess)
 {
     
     graph.ResetSearchParameters();
@@ -33,6 +33,8 @@ bool AI::Dijkstra::Run(GridBasedGraph& graph, int startX, int startY, int endX, 
                     node->parent = currentNode;
 
                     node->cost = currentNode->cost + getCost(node);
+                    node->guess = getGuess(node,endNode);
+
                  
                     mOpenList.push_back(node);
                     mOpenList.sort();

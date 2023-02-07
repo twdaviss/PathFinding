@@ -21,8 +21,10 @@ public:
 	}
 	std::vector<REng::Math::Vector2> FindPath(int startX, int startY, int endX, int endY);
 	std::vector<REng::Math::Vector2> FindPathDijkstra(int startX, int startY, int endX, int endY);
-	REng::Math::Vector2 GetPixelPosition(int x, int y);
+	std::vector<REng::Math::Vector2> FindPathAStar(int startX, int startY, int endX, int endY);
+	REng::Math::Vector2 GetPixelPosition(int x, int y) const;
 	float GetCost(AI::GridBasedGraph::Node*);
+	float GetGuess(AI::GridBasedGraph::Node* node, AI::GridBasedGraph::Node* endNode);
 private:
 	std::vector<int> mTilemap;
 	std::vector<Tile*> mTiles;
@@ -30,7 +32,6 @@ private:
 	int mRows;
 	int mCollumns;
 	int mTileSize;
-	bool CheckNeighbour(AI::GridBasedGraph::Node* neighbour);
 
 };
 

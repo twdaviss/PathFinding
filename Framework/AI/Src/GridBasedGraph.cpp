@@ -87,6 +87,8 @@ void AI::GridBasedGraph::ResetSearchParameters() const
 		node->opened = false;
 		node->closed = false;
 		node->cost = 0.0f;
+		node->guess = 0.0f;
+
 	}
 }
 

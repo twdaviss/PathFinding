@@ -134,7 +134,7 @@ int Tilemap::ToIndex(int x, int y) {
 
 std::vector<REng::Math::Vector2> Tilemap::FindPath(int startX, int startY, int endX, int endY)
 {
-	std::vector<REng::Math::Vector2> path;
+	std::vector<REng::Math::Vector2> path = {};
 	NodeList closedList;
 	BFS bfs;
 	REng::Math::Vector2 pos;
@@ -148,11 +148,11 @@ std::vector<REng::Math::Vector2> Tilemap::FindPath(int startX, int startY, int e
 		}
 		std::reverse(path.begin(), path.end());
 	}
-	return path;
+	return (path);
 }
 std::vector<REng::Math::Vector2> Tilemap::FindPathDijkstra(int startX, int startY, int endX, int endY)
 {
-	std::vector<REng::Math::Vector2> path;
+	std::vector<REng::Math::Vector2> path = {};
 	NodeList closedList;
 	Dijkstra ds;
 	REng::Math::Vector2 pos;
@@ -164,14 +164,39 @@ std::vector<REng::Math::Vector2> Tilemap::FindPathDijkstra(int startX, int start
 		closedList = ds.GetClosedList();
 		auto node = closedList.back();
 		while (node != nullptr) {
-			path.push_back(GetPixelPosition(node->collumn, node->row));
+			pos = GetPixelPosition(node->collumn, node->row);
+			path.push_back(pos);
 			node = node->parent;
 		}
 		std::reverse(path.begin(), path.end());
 	}
-	return path;
+	return (path);
 }
-REng::Math::Vector2 Tilemap::GetPixelPosition(int x, int y) {
+std::vector<REng::Math::Vector2> Tilemap::FindPathAStar(int startX, int startY, int endX, int endY)
+{
+	std::vector<REng::Math::Vector2> path = {};
+	NodeList closedList;
+	AStar as;
+	REng::Math::Vector2 pos;
+	auto GetCostWrapper = [&](GridBasedGraph::Node* node) {
+		return GetCost(node);
+	};
+	auto GetGuessWrapper = [&](GridBasedGraph::Node* node, GridBasedGraph::Node* node2) {
+		return GetGuess(node,node2);
+	};
+	if (as.Run(mGridBasedGraph, startX, startY, endX, endY, GetCostWrapper, GetGuessWrapper)) {
+		closedList = as.GetClosedList();
+		auto node = closedList.back();
+		while (node != nullptr) {
+			pos = GetPixelPosition(node->collumn, node->row);
+			path.push_back(pos);
+			node = node->parent;
+		}
+		std::reverse(path.begin(), path.end());
+	}
+	return (path);
+}
+REng::Math::Vector2 Tilemap::GetPixelPosition(int x, int y)const {
 	return { (float)x,(float)y };
 }
 
@@ -183,5 +208,12 @@ float Tilemap::GetCost(AI::GridBasedGraph::Node* node){
 	else {
 		return 1;
 	}
+}
+float Tilemap::GetGuess(AI::GridBasedGraph::Node* node, AI::GridBasedGraph::Node* endNode) {
+	//Euclidean distance
 
+	int dx = abs(node->collumn - endNode->collumn);
+	int dy = abs(node->row - endNode->row);
+
+	return sqrt(dx * dx + dy * dy);
 }
