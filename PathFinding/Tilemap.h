@@ -10,14 +10,19 @@ public:
 
 	void Render(bool debug);
 	void Unload();
+	bool isBlocked(int x, int y) const;
+	int ToIndex(int x, int y);
 	struct Tile {
 		Texture2D texture;
 		int weight;
 	};
-	Tile* GetTile(int collumn, int row) {
-		int index = collumn + row * mCollumns;
-		return mTiles[index];
+	Tile* GetTile(int num) {
+		return mTiles[num];
 	}
+	std::vector<REng::Math::Vector2> FindPath(int startX, int startY, int endX, int endY);
+	std::vector<REng::Math::Vector2> FindPathDijkstra(int startX, int startY, int endX, int endY);
+	REng::Math::Vector2 GetPixelPosition(int x, int y);
+	float GetCost(AI::GridBasedGraph::Node*);
 private:
 	std::vector<int> mTilemap;
 	std::vector<Tile*> mTiles;
@@ -25,5 +30,8 @@ private:
 	int mRows;
 	int mCollumns;
 	int mTileSize;
+	bool CheckNeighbour(AI::GridBasedGraph::Node* neighbour);
+
 };
+
 

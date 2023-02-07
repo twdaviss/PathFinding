@@ -16,11 +16,22 @@ namespace AI
 			NorthWest
 		};
 		struct Node {
-			std::array<Node*, 8> neighbours = {0};
+			std::array<Node*, 8> neighbours = {nullptr};
 			int collumn = 0;
 			int row = 0;
-		};
 
+			Node* parent = nullptr;
+			bool opened = false;
+			bool closed = false;
+
+			float cost = 0.0f;
+
+			bool operator<(const Node& a) const
+			{
+				return (cost < a.cost); // (a.cost < cost)
+			}
+		};
+		void ResetSearchParameters() const;
 		void Initialize(int collumns, int rows);
 		Node* GetNode(int x, int y);
 		const Node* GetNode(int x, int y)const ;
@@ -30,8 +41,11 @@ namespace AI
 
 		void SetNeighbours();
 		~GridBasedGraph();
-	private:
 		int GetIndex(int x, int y)const;
+
+		//int GetIndex(Node* node) const;
+
+	private:
 
 		std::vector<Node*> mNodes;
 		int mCollumns = 0;

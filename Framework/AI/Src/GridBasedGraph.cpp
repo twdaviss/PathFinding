@@ -1,6 +1,8 @@
 #include "pch.h"
 #include "GridBasedGraph.h"
 
+
+
 void AI::GridBasedGraph::Initialize(int collumns, int rows)
 {
 	mCollumns = collumns;
@@ -19,13 +21,13 @@ void AI::GridBasedGraph::Initialize(int collumns, int rows)
 			mTiles.push_back(tile);*/
 		}
 	}
-	SetNeighbours();
+	//SetNeighbours();
 }
 
 AI::GridBasedGraph::Node* AI::GridBasedGraph::GetNode(int x, int y)
 {
 	if (x < 0 || y < 0) {
-		return NULL;
+		return nullptr;
 	}
 	//auto it = find_if(v.begin(), v.end(), [&myString](const Type& obj) {return obj.getName() == myString; })
 
@@ -35,11 +37,22 @@ AI::GridBasedGraph::Node* AI::GridBasedGraph::GetNode(int x, int y)
 			return element;
 		}
 	}
-	return NULL;
+	return nullptr;
 }
 
 const AI::GridBasedGraph::Node* AI::GridBasedGraph::GetNode(int x, int y) const
 {
+	if (x < 0 || y < 0) {
+		return nullptr;
+	}
+	//auto it = find_if(v.begin(), v.end(), [&myString](const Type& obj) {return obj.getName() == myString; })
+
+	for (Node* element : mNodes)
+	{
+		if (element->collumn == x && element->row == y) {
+			return element;
+		}
+	}
 	return nullptr;
 }
 
@@ -53,20 +66,7 @@ int AI::GridBasedGraph::GetRows() const
 	return mRows;
 }
 
-void AI::GridBasedGraph::SetNeighbours() {
-	for (int row = 0; row < mRows; row++) {
-		for (int collumn = 0; collumn < mCollumns; collumn++) {
-			GetNode(collumn, row)->neighbours[North] = GetNode(collumn, row-1);
-			GetNode(collumn, row)->neighbours[NorthEast] = GetNode(collumn+1,row - 1 );
-			GetNode(collumn, row)->neighbours[East] = GetNode(collumn + 1,row);
-			GetNode(collumn, row)->neighbours[SouthEast] = GetNode(collumn + 1,row+1);
-			GetNode(collumn, row)->neighbours[South] = GetNode(collumn,row+1);
-			GetNode(collumn, row)->neighbours[SouthWest] = GetNode(collumn-1, row + 1);
-			GetNode(collumn, row)->neighbours[West] = GetNode(collumn-1, row);
-			GetNode(collumn, row)->neighbours[NorthWest] = GetNode(collumn-1, row - 1);
-		}
-	}
-}
+
 
 AI::GridBasedGraph::~GridBasedGraph()
 {
@@ -78,10 +78,15 @@ AI::GridBasedGraph::~GridBasedGraph()
 
 int AI::GridBasedGraph::GetIndex(int x, int y) const
 {
-	auto it = std::find_if(mNodes.begin(), mNodes.end(), [x, y](const Node* obj) {if (obj->collumn == x && obj->row == y){ return obj; }});
-	if (it != mNodes.end())
-	{
-		int index = std::distance(mNodes.begin(), it);
-		return index;
+	return y * mCollumns + x;
+}
+void AI::GridBasedGraph::ResetSearchParameters() const
+{
+	for (Node* node : mNodes) {
+		node->parent = nullptr;
+		node->opened = false;
+		node->closed = false;
+		node->cost = 0.0f;
 	}
 }
+

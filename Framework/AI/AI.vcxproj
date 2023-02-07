@@ -143,13 +143,19 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="Inc\BFS.h" />
     <ClInclude Include="Inc\AI.h" />
     <ClInclude Include="Inc\Common.h" />
+    <ClInclude Include="Inc\DFS.h" />
+    <ClInclude Include="Inc\Dijkstra.h" />
     <ClInclude Include="Inc\GridBasedGraph.h" />
     <ClInclude Include="Inc\Test.h" />
     <ClInclude Include="Src\pch.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="Src\BFS.cpp" />
+    <ClCompile Include="Src\DFS.cpp" />
+    <ClCompile Include="Src\Dijkstra.cpp" />
     <ClCompile Include="Src\GridBasedGraph.cpp" />
     <ClCompile Include="Src\pch.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>

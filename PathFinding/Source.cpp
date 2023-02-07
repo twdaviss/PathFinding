@@ -22,14 +22,14 @@ void GameInit() {
 	rect.height = offsetY;
 	myTexture = LoadTexture(fullPath.c_str());
 
-	myTilemap.LoadTilemap("Tilemap.txt",32);
 	myTilemap.LoadTiles("Tiles.txt");
+	myTilemap.LoadTilemap("Tilemap.txt",32);
 }
 
 bool GameUpdate() {
-
+	std::vector<REng::Math::Vector2> path;
 	myTilemap.Render(true);
-
+	path = myTilemap.FindPathDijkstra(1,1,9,9);
 	float moveSpeed = 200.0f;
 	if (IsKeyDown(KEY_RIGHT)) {
 		position.x += moveSpeed * GetFrameTime();
